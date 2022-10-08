@@ -1,0 +1,26 @@
+	_G.loop = true
+	while _G.loop do
+		task.wait()
+		local SlimeTable = {"Orange Slime", "Green Slime", "Blue Slime", "Warrior Ghost", "Warrior Slime", "Reindeer", "Cow"}
+		for i, v in pairs(SlimeTable) do
+			local Slime = workspace.Replicators.Both:FindFirstChild(v)
+			if Slime then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Slime:GetPivot() + Vector3.new(0, -15, 0)
+			end
+		end
+
+		spawn(
+			function()
+				for i, v in pairs(game:GetService("Workspace").Replicators.Both:GetChildren()) do
+					if
+						v.PrimaryPart ~= nil and
+						(v.PrimaryPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <
+						18 and
+						v:FindFirstChild("Humanoid")
+					then
+						game:GetService("ReplicatedStorage").References.Comm.Events.ToolAction:FireServer(v)
+					end
+				end
+			end
+		)
+	end
