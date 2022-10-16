@@ -1,0 +1,24 @@
+			local SlimeTable = {"Banana Tree", "Plantain"}
+				for i, v in pairs(SlimeTable) do
+					local Slime = workspace.Replicators.Both:FindFirstChild(v)
+					if Slime then
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Slime:GetPivot() + Vector3.new(0,-20,0)
+
+					end
+				end
+
+				for i , v in pairs(game:GetService("Workspace").Replicators.Both:GetChildren()) do
+					if v.PrimaryPart ~= nil and (v.PrimaryPart.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 20 and v:FindFirstChild("Humanoid") == nil then
+						game:GetService("ReplicatedStorage").References.Comm.Events.ToolAction:FireServer(v)
+					end;
+				end;
+				wait(2)
+
+				for i , v in pairs(game:GetService("Workspace").Replicators.NonPassive:GetChildren()) do
+					if  v.PrimaryPart ~= nil and (v.PrimaryPart.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 18 and  v:FindFirstChild("Humanoid") == nil then
+						if v.Name == "Banana" then
+							task.wait(0.2)
+							game:GetService("ReplicatedStorage").References.Comm.Events.ItemInteracted:FireServer(v, "Pickup")
+						end
+				end
+				end
